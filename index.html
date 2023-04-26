@@ -8,9 +8,9 @@
             
             function drawChart() {
               $.getJSON('data.json', function(data) {
-                var chartData = [['Year', 'Sales']];
+                var chartData = [['dia', 'valor']];
                 $.each(data, function(key, val) {
-                  chartData.push([val.year, val.sales]);
+                  chartData.push([val.dia, val.valor]);
                 });
                 
                 var options = {
