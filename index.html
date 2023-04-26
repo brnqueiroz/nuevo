@@ -1,32 +1,47 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <tittle></tittle>
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script type="text/javascript">
-            google.charts.load('current', {'packages':['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-            
-            function drawChart() {
-              $.getJSON('data.json', function(data) {
-                var chartData = [['dia', 'valor']];
-                $.each(data, function(key, val) {
-                  chartData.push([val.dia, val.valor]);
-                });
-                
-                var options = {
-                  title: 'Sales over time',
-                  curveType: 'function',
-                  legend: { position: 'bottom' }
-                };
-                
-                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-                chart.draw(google.visualization.arrayToDataTable(chartData), options);
-              });
-            }
-          </script>
-    </head>
-    <body>
-        <div id="chart"></div>
-    </body>
+<head>
+	<title>Gráfico de Linha com Google Chart</title>
+	<!-- Inclua o arquivo JS do Google Chart -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+		// Carrega a API de visualização e os pacotes necessários.
+		google.charts.load('current', {'packages':['corechart']});
+
+		// Chama a função drawChart quando a API do Google Chart estiver pronta.
+		google.charts.setOnLoadCallback(drawChart);
+
+		function drawChart() {
+			// Carrega o arquivo JSON contendo os dados do gráfico.
+			$.getJSON('data.json', function (dados) {
+				// Cria um array com os dados do gráfico.
+				var dadosGrafico = [];
+				dadosGrafico.push(['Dia', 'Valor']);
+				$.each(dados, function (indice, valor) {
+					dadosGrafico.push([valor.dia, valor.valor]);
+				});
+
+				// Cria um objeto DataTable contendo os dados do gráfico.
+				var data = google.visualization.arrayToDataTable(dadosGrafico);
+
+				// Define as opções do gráfico.
+				var options = {
+					title: 'Valores por Dia',
+					curveType: 'function',
+					legend: { position: 'bottom' }
+				};
+
+				 // Cria o gráfico de linha.
+				var chart = new google.visualization.LineChart(document.getElementById('grafico'));
+
+				// Desenha o gráfico de linha.
+				chart.draw(data, options);
+			});
+		}
+	</script>
+</head>
+<body>
+	<!-- Elemento HTML onde o gráfico será exibido. -->
+	<div id="grafico" style="width: 900px; height: 500px;"></div>
+</body>
 </html>
