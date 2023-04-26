@@ -1,7 +1,29 @@
 <html>
     <head>
         <tittle></tittle>
-
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+              $.getJSON('data.json', function(data) {
+                var chartData = [['Year', 'Sales']];
+                $.each(data, function(key, val) {
+                  chartData.push([val.year, val.sales]);
+                });
+                
+                var options = {
+                  title: 'Sales over time',
+                  curveType: 'function',
+                  legend: { position: 'bottom' }
+                };
+                
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(google.visualization.arrayToDataTable(chartData), options);
+              });
+            }
+          </script>
     </head>
     <body>
         <div id="chart"></div>
